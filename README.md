@@ -1,4 +1,5 @@
 # Image-Processing-in-Kotlin
+* **Read the blog on Codetown:** https://codetown.com/group/kotlin/forum/topics/kotlin-thursdays-image-processing-in-kotlin-with-amanda-hinchman
 
 ## Kotlin Thursdays: Image Processing in Kotlin Part 1 
 Welcome to Kotlin Thursdays and Happy Halloween!  This week, we will be exploring image processing in Kotlin.  If you have used applications like Instagram, Snapchat, or even Photoshop, you may already be familiar with image processing and not even know it!  
