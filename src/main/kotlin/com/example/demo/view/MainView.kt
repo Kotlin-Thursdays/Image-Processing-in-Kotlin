@@ -14,9 +14,9 @@ class MainView : View("I am a chicken") {
 
     override val root = hbox {
         imageview(wImage).apply {
+            /*makeDuller(wImage)
             makeDuller(wImage)
-            makeDuller(wImage)
-            makeDuller(wImage)
+            makeDuller(wImage)*/
         }
         hboxConstraints {
             prefWidth = 640.0
