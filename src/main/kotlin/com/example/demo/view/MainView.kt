@@ -1,5 +1,6 @@
 package com.example.demo.view
 
+import com.sun.corba.se.spi.ior.Writeable
 import javafx.scene.image.Image
 import javafx.scene.image.PixelReader
 import javafx.scene.image.PixelWriter
@@ -21,7 +22,7 @@ class MainView : View("I am a chicken") {
 
     override val root = hbox {
         imageview(wImage1).apply {
-            orFilter(monochromatic1.pixelReader, monochromatic2.pixelReader)
+            applyFilter(::and, monochromatic1.pixelReader, monochromatic2.pixelReader)
         }
         hboxConstraints {
             prefWidth = 400.0
@@ -29,22 +30,19 @@ class MainView : View("I am a chicken") {
         }
     }
 
-    fun orFilter(a: PixelReader, b: PixelReader): PixelWriter {
-        for (x in 0 until width) {      // 0 -> (width-1)
+    private fun applyFilter(filter: (Color, Color) -> Color, a: PixelReader, b: PixelReader): PixelWriter {
+        for (x in 0 until width) {
             for (y in 0 until height) {
-                resultWriter.setColor(x, y, or2(a.getColor(x, y), b.getColor(x, y)))
+                resultWriter.setColor(x, y, filter(a.getColor(x, y), b.getColor(x, y)))
             }
         }
+
         return resultWriter
     }
 
     // or || - only 1 black to be true
     private fun or(a: Color, b: Color): Color {
         return if (a == Color.BLACK || b == Color.BLACK) Color.BLACK else Color.WHITE
-    }
-
-    private fun or2(a: Color, b: Color): Color {
-        if (a == Color.BLACK || b == Color.BLACK) return Color.BLACK else return Color.WHITE
     }
 
     // and && - both black to be true
@@ -66,5 +64,14 @@ class MainView : View("I am a chicken") {
                 pixelWriter.setColor(x, y, color.desaturate())
             }
         }
+    }
+
+    private fun orFilter(a: PixelReader, b: PixelReader): PixelWriter {
+        for (x in 0 until width) {      // 0 -> (width-1)
+            for (y in 0 until height) {
+                resultWriter.setColor(x, y, or(a.getColor(x, y), b.getColor(x, y)))
+            }
+        }
+        return resultWriter
     }
 }
